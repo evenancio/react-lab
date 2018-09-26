@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc//WithClass';
+
+export const AuthContext = React.createContext(false);
 
 class App extends Component {
   state = {
@@ -10,7 +13,9 @@ class App extends Component {
       {id: 'asdsa2', name: 'Paul', age: 31},
       {id: 'asdsa3', name: 'John', age: 27},
     ],
-    showPersons: false
+    showPersons: false,
+    toggleClicked: 0,
+    authenticated: false
   };
 
   nameChangedHandler = (event, id) => {
@@ -32,9 +37,12 @@ class App extends Component {
   };
 
   togglePersonsHandler = () => {
-    this.setState({
-      showPersons: !this.state.showPersons
-    })
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !prevState.showPersons,
+        toggleClicked: prevState.toggleClicked + 1
+      }
+    });
   };
 
   deletePersonHandler = (personIndex) => {
@@ -42,6 +50,12 @@ class App extends Component {
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   };
+
+  loginHandler = () => {
+    this.setState({
+      authenticated: true
+    })
+  }
 
   render() {
     let persons = null;
@@ -55,16 +69,19 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      <React.Fragment>
         <Cockpit
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
         />
-        {persons}
-      </div>
+          <AuthContext.Provider value={this.state.authenticated}>
+            {persons}
+          </AuthContext.Provider>        
+      </React.Fragment>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
