@@ -21,13 +21,13 @@ const cockpit = ( props ) => {
     }
 
     return(
-        <Aux>
+        <>
             <h1>Hello</h1>
             <p className={assignedClasses.join(' ')}>It's working</p>
             <button 
                 className={btnClass}
                 onClick={props.clicked}>Click here</button>
-        </Aux>
+        </>
     );
 };
 
