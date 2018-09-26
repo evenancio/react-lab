@@ -1,7 +1,5 @@
 import React from 'react';
 import classes from './Cockpit.css';
-import Aux from '../../hoc/Auxiliary';
-
 
 const cockpit = ( props ) => {
     
@@ -21,13 +19,13 @@ const cockpit = ( props ) => {
     }
 
     return(
-        <>
+        <React.Fragment>
             <h1>Hello</h1>
             <p className={assignedClasses.join(' ')}>It's working</p>
             <button 
                 className={btnClass}
                 onClick={props.clicked}>Click here</button>
-        </>
+        </React.Fragment>
     );
 };
 
